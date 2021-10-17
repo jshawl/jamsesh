@@ -1,0 +1,11 @@
+<%= form_tag "/auth/spotify", method: :post do %>
+<%= submit_tag "Log In with Spotify" %>
+<% end %>
+
+
+<pre><%= JSON.pretty_generate(@spotify.basic) %></pre>
+<img src='<%= @current[:image] %>', style='float: left; margin: 0 1em 1em 0; width: 100px;'>
+<strong><%= @current[:song_title] %></strong> - <%= @current[:artist_name] %>
+
+
+<%= @spotify.expired? %>
