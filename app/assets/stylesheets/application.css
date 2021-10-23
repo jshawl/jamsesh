@@ -13,3 +13,67 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+    padding: 2em;
+    font-family: Roboto, sans-serif;
+    font-weight: 300;
+    color: #333;
+}
+
+h1 {
+    margin: 0;
+}
+
+h1 a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 1rem;
+}
+
+header {
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #ebebeb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player {
+    border: 1px solid #ebebeb;
+    display: flex;
+    padding: 1rem;
+    margin-bottom: 1em;
+    font-size: 2rem;
+}
+
+.player img {
+    width: 80px;
+    height: 80px;
+    margin-right: 1rem;
+}
+
+.js-genius-wrapper {
+    position: relative;
+}
+
+.js-progress {
+    width: 10px;
+    background: rgba(0, 0, 0, .1);
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.music {
+    margin-top: 0 !important;
+    margin-left: 10px !important;
+    border-top: 1px solid #ebebeb !important;
+    display: block !important;
+}
+
+.rg_embed_body p {
+    margin-top: 0;
+}

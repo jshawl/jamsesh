@@ -6,6 +6,7 @@ gem 'omniauth'
 gem 'omniauth-spotify-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'httparty'
+gem "genius", "~> 0.1.1"
 gem 'pry'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'

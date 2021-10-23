@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
   def index
-    @spotify = Spotify::Session.new(session[:auth])
-    @current = @spotify.get_current
+    if session[:auth]
+      @spotify = Spotify::Session.new(session[:auth])
+    end
   end
 
   def spotify_auth_callback

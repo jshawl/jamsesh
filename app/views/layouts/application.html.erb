@@ -5,12 +5,33 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet"> 
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <header>
+      <div>
+        <h1><a href='/'>Jam Sesh</a></h1>
+        <small>A Spotify & Genius mashup</small>
+      </div>
+      <div style='text-align: right;'>
+      <% if current_user %>
+        <span>Logged in as <%= current_user.basic[:email] %> </span> <br>
+        <small><a href='#'>Log Out</a></small>
+      <% else %>
+        <%= form_tag "/auth/spotify", method: :post do %>
+          <%= submit_tag "Log In with Spotify" %>
+        <% end %>
+      <% end %>
+      </div>
+    </header>
     <%= yield %>
+    <hr style='clear: both;'/>
+    <pre><%= JSON.pretty_generate(current_user.basic) unless session[:auth].nil? %></pre>
   </body>
 </html>

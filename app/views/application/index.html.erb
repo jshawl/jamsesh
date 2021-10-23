@@ -1,11 +1,73 @@
-<%= form_tag "/auth/spotify", method: :post do %>
-<%= submit_tag "Log In with Spotify" %>
+<% if current_user %>
+<div class='player'>
+  <img src=''>
+  <div>
+    <strong class='js-song_title'></strong><br />
+    <small class='js-artist_name'></small><br>
+    <div style='font-size: 1rem;'>
+      <span class='js-progress-time'></span><br>
+      <input type='range' value='25' min='0' max='100' step='1' class='js-ctrl-progress' disabled>
+    </div>
+  </div>
+</div>
+
+<a href='#' class='js-tabs btn' target='_blank'>🔗 Guitar Tabs</a>
+
+<div class='js-genius'>
+
+  <div id='rg_embed_link_' class='rg_embed_link' data-song-id=''></div> 
+  <div class='js-genius-wrapper'>
+  <div class='js-progress'></div>  
+  <div class='js-genius-html'></div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+
+$.getJSON("/api/current").then(res => {
+  console.log(res)
+  $.get("/api/tabs?q=" + res.artist_name + " " + res.song_title).then(r => {
+    $(".js-tabs").attr('href', r.url)
+  })
+  $("img").attr("src", res.image)
+  $(".js-song_title").html(res.song_title)
+  $(".js-artist_name").html(res.artist_name)
+  let i = 0;
+  setInterval(() => {
+    const progress = res.progress_ms + ++i * 100
+    const pct = Math.round(100 * (progress) / res.duration_ms) + "%"
+    $(".js-progress").css('height', pct);
+    $(".js-ctrl-progress").val(pct.slice(0,-1))
+    let progressTime = Math.floor(progress / 1000)
+    let durationTime = Math.floor(res.duration_ms / 1000)
+    $(".js-progress-time").html(secondsToClock(progressTime) + " / " + secondsToClock(durationTime))
+  }, 100)
+  let str = (res.artist_name + " " + res.song_title)
+  $(".js-search-tabs").attr("href", "https://www.ultimate-guitar.com/search.php?search_type=title&value=" + res.artist_name + " " + res.song_title)
+  $("[data-song-id]")
+    .attr("data-song-id", res.lyrics_id)
+    .attr('id','rg_embed_link_' + res.lyrics_id)
+    
+  $.get("https://genius.com/songs/"+ res.lyrics_id +"/embed.js").then(res => {
+    document.write = function(value){
+      $(".js-genius-html").append(value)
+    }
+    eval(res)
+  })
+})
+
+function secondsToClock(ms) {
+  let minutes = Math.floor(ms / 60)
+  ms -= minutes * 60
+  return String(minutes).padStart(2,'0') + ":" + String(ms).padStart(2,'0')
+}
+</script>
+
+
+<% else %> 
+
 <% end %>
 
 
-<pre><%= JSON.pretty_generate(@spotify.basic) %></pre>
-<img src='<%= @current[:image] %>', style='float: left; margin: 0 1em 1em 0; width: 100px;'>
-<strong><%= @current[:song_title] %></strong> - <%= @current[:artist_name] %>
 
-
-<%= @spotify.expired? %>
