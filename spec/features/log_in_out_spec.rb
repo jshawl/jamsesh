@@ -1,0 +1,10 @@
+require 'rails_helper'
+
+RSpec.describe 'log in/out', type: :feature do
+  describe 'root path' do
+    it 'shows a log in button' do
+      visit root_path
+      expect(page).to have_button('Log In with Spotify')
+    end
+  end
+end

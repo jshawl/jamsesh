@@ -13,7 +13,7 @@ module Api
       render json: cur.merge(lyrics_id: lyrics(cur))
     end
     def lyrics(cur)
-      return {} if cur.empty?
+      return nil if cur.empty?
       Genius.access_token = Rails.application.credentials.genius_api_token
       Genius::Song.search(cur[:artist_name] + cur[:song_title])[0].id
     end
