@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap" rel="stylesheet"> 
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
   </head>
 
   <body>
@@ -21,8 +21,8 @@
       </div>
       <div style='text-align: right;'>
       <% if current_user %>
-        <span>Logged in as <%= current_user.basic[:email] %> </span> <br>
-        <small><a href='#'>Log Out</a></small>
+        <span>Logged in as <%= current_user.email %> </span> <br>
+        <small><%= link_to "Log Out", logout_path %></small>
       <% else %>
         <%= form_tag "/auth/spotify", method: :post do %>
           <%= submit_tag "Log In with Spotify" %>
@@ -33,5 +33,6 @@
     <%= yield %>
     <hr style='clear: both;'/>
     <pre><%= JSON.pretty_generate(current_user.basic) unless session[:auth].nil? %></pre>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </body>
 </html>

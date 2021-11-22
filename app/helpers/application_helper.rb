@@ -1,7 +1,6 @@
 module ApplicationHelper
   def current_user
-    @session = Spotify::Session.new(session[:auth])
-    return nil if @session.expired?
-    @session
+    return nil unless session[:current_user_id]
+    User.find(session[:current_user_id])
   end
 end

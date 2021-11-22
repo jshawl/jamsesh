@@ -9,10 +9,11 @@ module Api
   class ApiController < ApplicationController
     def current
       @spotify = Spotify::Session.new(session[:auth])
-      cur = @spotify.get_current
+      cur = @spotify.get_current(current_user)
       render json: cur.merge(lyrics_id: lyrics(cur))
     end
     def lyrics(cur)
+      return {} if cur.empty?
       Genius.access_token = Rails.application.credentials.genius_api_token
       Genius::Song.search(cur[:artist_name] + cur[:song_title])[0].id
     end

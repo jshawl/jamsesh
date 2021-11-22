@@ -2,29 +2,28 @@ require 'net/http'
 require "base64"
 module Spotify
   class Session
-    def initialize auth_hash
-      @auth_hash = auth_hash
+    def initialize user_id
+      @user = User.find_by(id: user_id)
       # if !expired?
       #   @auth_hash["credentials"]["token"] = refresh_access_token
       # end
     end
     def expired?
-      @auth_hash["credentials"]["expires_at"] < Time.now.to_i
+      return true if @user.nil?
+      @user.token_expires_at < Time.now.to_i
     end
     def basic
       {
-        name: @auth_hash["info"]["name"],
-        email: @auth_hash["info"]["email"],
-        image: @auth_hash["info"]["image"],
-        credentials: @auth_hash["credentials"].merge(
-          expires_in: @auth_hash["credentials"]["expires_at"] - Time.now.to_i
-        ),
+        name: @user.name,
+        email: @user.email,
+        image: @user.image
       }
     end
-    def get_current
+    def get_current user
         current = JSON.parse(HTTParty.get('https://api.spotify.com/v1/me/player?market=US', headers: {
-          Authorization: "Bearer #{@auth_hash['credentials']['token']}"
+          Authorization: "Bearer #{user.access_token}"
         }).body || '{}')
+        return {} if current.empty?
         {
           artist_name: current["item"]["artists"].map{|art| art["name"]}.join(", "),
           song_title: current["item"]["name"],
