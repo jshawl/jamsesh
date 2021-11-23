@@ -46,9 +46,8 @@ function render(res) {
         $(".js-ctrl-progress").val((pct + "%").slice(0, -1));
         let progressTime = Math.floor(progress / 1000);
         let durationTime = Math.floor(res.duration_ms / 1000);
-        $(".js-progress-time").html(
-            secondsToClock(progressTime) + " / " + secondsToClock(durationTime)
-        );
+        $(".js-progress-time").html(secondsToClock(progressTime));
+        $(".js-progress-time-total").html(secondsToClock(durationTime));
     }, 100);
     let str = res.artist_name + " " + res.song_title;
     // $(".js-search-tabs").attr(

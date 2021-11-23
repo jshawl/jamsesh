@@ -40,9 +40,30 @@ header {
     align-items: center;
 }
 
+.flex {
+    display: flex;
+}
+
+.progress {
+    display: flex;
+    justify-content: center;
+    align-items: middle;
+    margin-top: 2em;
+    font-size: .6rem;
+}
+
+.progress input {
+    width: 85%;
+    margin: 0 .5em;
+}
+
+.progress span {
+    display: block;
+    line-height: 2rem;
+}
+
 .player {
     border: 1px solid #ebebeb;
-    display: flex;
     padding: 1rem;
     margin-bottom: 1em;
     font-size: 2rem;

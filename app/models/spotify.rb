@@ -23,7 +23,6 @@ module Spotify
         current = JSON.parse(HTTParty.get('https://api.spotify.com/v1/me/player?market=US', headers: {
           Authorization: "Bearer #{user.access_token}"
         }).body || '{}')
-        p current
         if current["error"]
           refresh_access_token(user)
           return {}

@@ -21,7 +21,6 @@
       </div>
       <div style='text-align: right;'>
       <% if current_user %>
-        <span>Logged in as <%= current_user.email %> </span> <br>
         <small><%= link_to "Log Out", logout_path %></small>
       <% else %>
         <%= form_tag "/auth/spotify", method: :post do %>

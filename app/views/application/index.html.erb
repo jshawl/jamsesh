@@ -1,13 +1,16 @@
 <% if current_user %>
     <div class='player'>
-        <img src=''>
-        <div>
-            <strong class='js-song_title'></strong><br />
-            <small class='js-artist_name'></small><br>
-            <div style='font-size: 1rem;'>
-                <span class='js-progress-time'></span><br>
-                <input type='range' value='25' min='0' max='100' step='1' class='js-ctrl-progress' disabled>
+        <div class='flex'>
+            <img src=''>
+            <div>
+                <strong class='js-song_title'></strong><br />
+                <small class='js-artist_name'></small><br>
             </div>
+        </div>
+        <div class='progress'>
+            <span class='js-progress-time'></span>
+            <input type='range' value='25' min='0' max='100' step='1' class='js-ctrl-progress' disabled>
+            <span class='js-progress-time-total'></span>
         </div>
     </div>
 
