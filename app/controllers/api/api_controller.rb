@@ -14,6 +14,8 @@ module Api
     end
     def lyrics(cur)
       return nil if cur.empty?
+      p "cur is"
+      p cur
       Genius.access_token = Rails.application.credentials.genius_api_token
       Genius::Song.search(cur[:artist_name] + cur[:song_title])[0].id
     end

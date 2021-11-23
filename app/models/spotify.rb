@@ -23,6 +23,11 @@ module Spotify
         current = JSON.parse(HTTParty.get('https://api.spotify.com/v1/me/player?market=US', headers: {
           Authorization: "Bearer #{user.access_token}"
         }).body || '{}')
+        p current
+        if current["error"]
+          refresh_access_token(user)
+          return {}
+        end
         return {} if current.empty?
         {
           artist_name: current["item"]["artists"].map{|art| art["name"]}.join(", "),
@@ -34,7 +39,7 @@ module Spotify
         }
     end
 
-    def refresh_access_token
+    def refresh_access_token(user)
       Rails.logger.debug "Refreshing Access Token"
       auth = Base64.strict_encode64("#{Rails.application.credentials.spotify_client_id}:#{Rails.application.credentials.spotify_client_secret}")
       response = JSON.parse(HTTParty.post("https://accounts.spotify.com/api/token", 
@@ -43,10 +48,11 @@ module Spotify
         },
         body: {
           grant_type: 'refresh_token',
-          refresh_token: @auth_hash["credentials"]["refresh_token"]
+          refresh_token: user.refresh_token
         }
       ).body)
       Rails.logger.debug "Got #{response}"
+      user.update(access_token: response["access_token"])
       response["access_token"]
     end
   end

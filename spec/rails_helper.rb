@@ -11,6 +11,8 @@ require 'webdrivers/chromedriver'
 
 Capybara.default_driver = :selenium_chrome_headless
 Capybara.javascript_driver = :selenium_chrome_headless
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow: %r{(__identify__|shutdown|session|chromedriver.storage.googleapis.com)})
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
