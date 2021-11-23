@@ -40,7 +40,7 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Install dependent libraries
+    - name: Test
       env:
         PGUSER: runner
         PGHOST: 127.0.0.1
