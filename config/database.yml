@@ -82,5 +82,3 @@ test:
 production:
   <<: *default
   database: jamsesh_production
-  username: jamsesh
-  password: <%= ENV['JAMSESH_DATABASE_PASSWORD'] %>
