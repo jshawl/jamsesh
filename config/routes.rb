@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'application#logout'
   namespace :api do
     get '/current', to: 'api#current'
+    get '/lyrics', to: 'api#lyrics'
     get '/tabs', to: 'api#tabs'
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

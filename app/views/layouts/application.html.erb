@@ -30,8 +30,6 @@
       </div>
     </header>
     <%= yield %>
-    <hr style='clear: both;'/>
-    <pre><%= JSON.pretty_generate(current_user.basic) unless session[:auth].nil? %></pre>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </body>
 </html>
