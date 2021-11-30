@@ -3,20 +3,11 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
-import Rails from "@rails/ujs";
-import * as ActiveStorage from "@rails/activestorage";
-import "channels";
 
-// Rails.start();
-ActiveStorage.start();
-
-function init() {
-    setInterval(() => {
-        $.getJSON("/api/current").then(render);
-    }, 1000);
-}
-
-init();
+const main = setInterval(() => {
+    $.getJSON("/api/current").then(render);
+    //.catch(() => clearInterval(main)); // probably not logged in
+}, 1000);
 
 function render(res) {
     console.log(res);
@@ -28,7 +19,7 @@ function render(res) {
         return;
     }
 
-    embedLyrics(`${res.song_title} ${res.artist_name}`);
+    embedLyrics(`${res.artist_name} ${res.song_title} `);
 
     // $.get("/api/tabs?q=" + res.artist_name + " " + res.song_title).then((r) => {
     //     $(".js-tabs").attr("href", r.url);
@@ -37,7 +28,6 @@ function render(res) {
     $(".js-song_title").html(res.song_title);
     $(".js-artist_name").html(res.artist_name);
     let i = 0;
-    // var int = setInterval(() => {
     const progress = res.progress_ms + ++i * 100;
 
     const pct = Math.round((100 * progress) / res.duration_ms);
@@ -47,8 +37,6 @@ function render(res) {
     let durationTime = Math.floor(res.duration_ms / 1000);
     $(".js-progress-time").html(secondsToClock(progressTime));
     $(".js-progress-time-total").html(secondsToClock(durationTime));
-    // }, 100);
-    let str = res.artist_name + " " + res.song_title;
     // $(".js-search-tabs").attr(
     //     "href",
     //     "https://www.ultimate-guitar.com/search.php?search_type=title&value=" +
