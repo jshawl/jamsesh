@@ -10,12 +10,17 @@ module Api
     def current
       @spotify = Spotify::Session.new(session[:auth])
       cur = @spotify.get_current(current_user)
-      render json: cur.merge(lyrics_id: lyrics(cur))
+      render json: cur
     end
-    def lyrics(cur)
-      return nil if cur.empty?
+    def lyrics
       Genius.access_token = Rails.application.credentials.genius_api_token
-      Genius::Song.search(cur[:artist_name] + cur[:song_title])[0].id
+      results = Genius::Song.search(params[:query]).map do |result|
+        {
+          id: result.id,
+          full_title: result.resource["full_title"]
+        }
+      end
+      render json: results
     end
     def tabs
       res = HTTParty.get("https://www.ultimate-guitar.com/search.php?search_type=title&value=#{params[:q]}")
