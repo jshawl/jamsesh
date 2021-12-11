@@ -19,6 +19,8 @@ body {
     font-family: Roboto, sans-serif;
     font-weight: 300;
     color: #333;
+    max-width: 1000px;
+    margin: auto;
 }
 
 h1 {
@@ -34,10 +36,34 @@ h1 a {
 header {
     margin-bottom: 1em;
     padding-bottom: 1em;
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: 1px solid #444;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.demo {
+    max-width: 100%;
+    border: 1px solid #fff;
+    padding: 5px;
+}
+
+h2 {
+    margin-top: 2em;
+}
+
+.logos {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.logos svg {
+    max-width: 200px;
+}
+
+.inline-form {
+    display: inline-block;
 }
 
 .flex {
@@ -81,7 +107,7 @@ header {
 
 .js-progress {
     width: 10px;
-    background: rgba(0, 0, 0, .1);
+    background: rgba(0, 0, 0, .3);
     pointer-events: none;
     position: absolute;
     top: 0;
@@ -97,4 +123,33 @@ header {
 
 .rg_embed_body p {
     margin-top: 0;
+}
+
+.rg_embed {
+    background: none !important;
+}
+
+.rg_embed a[data-id] {
+    color: #fff !important;
+}
+
+button,
+[type="submit"] {
+    background: #1BD760;
+    border: none;
+    font: inherit;
+    padding: .5em 1em;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+a {
+    color: #1BD760;
+}
+
+body {
+    background: #222;
+    color: #fff;
 }
