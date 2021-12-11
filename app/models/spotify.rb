@@ -34,8 +34,23 @@ module Spotify
           duration_ms: current["item"]["duration_ms"],
           progress_ms: current["progress_ms"],
           image: current["item"]["album"]["images"][1]["url"],
+          shuffle_state: current["shuffle_state"],
+          repeat_state: current["repeat_state"],
+          is_playing: current["is_playing"],
           # debug: current 
         }
+    end
+
+    def pause
+      HTTParty.put('https://api.spotify.com/v1/me/player/pause', headers: {
+        Authorization: "Bearer #{@user.access_token}"
+      }).body
+    end
+
+    def play
+      HTTParty.put('https://api.spotify.com/v1/me/player/play', headers: {
+        Authorization: "Bearer #{@user.access_token}"
+      }).body
     end
 
     def refresh_access_token(user)

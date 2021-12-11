@@ -7,10 +7,17 @@ end
 module Api
 
   class ApiController < ApplicationController
+    skip_forgery_protection
+
     def current
-      @spotify = Spotify::Session.new(session[:auth])
+      @spotify = Spotify::Session.new(session[:current_user_id])
       cur = @spotify.get_current(current_user)
       render json: cur
+    end
+    def control
+      @spotify = Spotify::Session.new(session[:current_user_id])
+      params["is_playing"] == "false" ? @spotify.play : @spotify.pause
+      head 200
     end
     def lyrics
       Genius.access_token = Rails.application.credentials.genius_api_token

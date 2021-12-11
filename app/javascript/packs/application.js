@@ -6,11 +6,15 @@
 
 const main = setInterval(() => {
     $.getJSON("/api/current").then(render);
-    //.catch(() => clearInterval(main)); // probably not logged in
 }, 1000);
 
+$(".js-play-pause").on("click", (e) => {
+    $.post("/api/current", {
+        is_playing: e.target.getAttribute("data-is-playing") === "true",
+    });
+});
+
 function render(res) {
-    console.log(res);
     if (!res.song_title) {
         $(".player").html("No song is currently playing on Spotify.");
         $(".js-genius-html").html(
@@ -37,6 +41,13 @@ function render(res) {
     let durationTime = Math.floor(res.duration_ms / 1000);
     $(".js-progress-time").html(secondsToClock(progressTime));
     $(".js-progress-time-total").html(secondsToClock(durationTime));
+
+    $(".js-play-pause").html(res.is_playing ? "Pause" : "Play");
+    $(".js-play-pause").attr(
+        "data-is-playing",
+        res.is_playing ? "true" : "false"
+    );
+
     // $(".js-search-tabs").attr(
     //     "href",
     //     "https://www.ultimate-guitar.com/search.php?search_type=title&value=" +
